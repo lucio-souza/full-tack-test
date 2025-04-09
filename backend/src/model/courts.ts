@@ -18,15 +18,7 @@ const Courts = sequelize.define("courts", {
   available: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
-    }
+  }
 });
 
 async function sincronizar() {
