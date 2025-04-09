@@ -58,7 +58,18 @@ class CourtsController{
         const data = await CourtsRepository.editCourt(id,name,location);
 
         data.status === 200
-        ? res.status(data.status).json({message:data.message,data:data.court})
+        ? res.status(data.status).json({message:data.message})
+        : res.status(data.status).json({message:data.message,error:data.error})
+    }
+
+    async editPartialCourt(req:Request,res:Response){
+        const {id}= req.params;
+        const {available} = req.body
+
+        const data = await CourtsRepository.editPartialCourt(id);
+
+        data.status === 200
+        ? res.status(data.status).json({message:data.message})
         : res.status(data.status).json({message:data.message,error:data.error})
     }
 }

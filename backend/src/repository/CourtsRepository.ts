@@ -55,21 +55,38 @@ class CourtsRespository{
 
     async editCourt(id:string,name:CourtsType,location:CourtsType){
         try {
-
             const data =await this.getOneById(id);
 
             if(data.status === 404){
-                return {status:data.status,message:'quadra inexistente não é possivel apaga-lá'};
+                return {status:data.status,message:'quadra inexistente não é possivel editala-lá'};
             }
 
-            const court = await Courts.update(
+            await Courts.update(
                 {name,location},
                 {where:{id}}
-            )
-
-            return {court,status:200,message:'quadra editada com sucesso'}
+            );
+            
+            return {status:200,message:'quadra editada com sucesso'};
         } catch (error) {
-            return {message:'erro ao listar quadras',status:500,error}
+            return {message:'erro interno',status:500,error}
+        }
+    }
+
+    async editPartialCourt(id:string){
+        try {
+        const data =await this.getOneById(id);
+
+        const value = data.court?.dataValues.available;
+        
+        if(!data.court){
+            return {status:data.status,message:'quadra inexistente não é possivel editala-lá'};
+        }
+
+        await Courts.update({available:!value},{where:{id}});
+        return {status:200,message:'disponibilidade da quadra alterada com sucesso'};
+
+        } catch (error) {
+            return {message:'erro interno',status:500,error}
         }
     }
 }
