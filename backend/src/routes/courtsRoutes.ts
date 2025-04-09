@@ -7,6 +7,8 @@ courtsRouter.post('/',CourtsController.createCourt);
 courtsRouter.get('/',CourtsController.listAllCourts);
 courtsRouter.get('/:id',CourtsController.listOneById);
 courtsRouter.delete('/:id',CourtsController.eraseById);
+courtsRouter.put('/:id',CourtsController.editCourt);
+
 
 export default courtsRouter;
 

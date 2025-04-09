@@ -41,14 +41,25 @@ class CourtsController{
 
     async eraseById(req:Request,res:Response){
         const {id}=req.params;
-
-        const data = await CourtsRepository.DeleteCourtById(id);
-        console.log(data.status);
         
+
+        const data = await CourtsRepository.deleteCourtById(id);
+        console.log(data.status);
 
         data.status === 200
         ? res.status(data.status).json({message:data.message})
         : res.status(data.status).json({ message: data.message, erro: data.error })
+    }
+
+    async editCourt(req:Request,res:Response){
+        const {id}=req.params;
+        const {name,location} = req.body;
+
+        const data = await CourtsRepository.editCourt(id,name,location);
+
+        data.status === 200
+        ? res.status(data.status).json({message:data.message,data:data.court})
+        : res.status(data.status).json({message:data.message,error:data.error})
     }
 }
 

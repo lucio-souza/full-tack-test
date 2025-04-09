@@ -38,16 +38,36 @@ class CourtsRespository{
         }
     }
 
-    async DeleteCourtById(id:string){
+    async deleteCourtById(id:string){
         try {
             const data = await this.getOneById(id);
 
             if(data.status===404){
-                return {status:data.status,message:'quadra inexistente não é possivel apaga-lá'}
+                return {status:data.status,message:'quadra inexistente não é possivel apaga-lá'};
             }
             
             await Courts.destroy({where:{id}})
             return {status:200,message:'quadra apagada com sucesso'}
+        } catch (error) {
+            return {message:'erro ao listar quadras',status:500,error}
+        }
+    }
+
+    async editCourt(id:string,name:CourtsType,location:CourtsType){
+        try {
+
+            const data =await this.getOneById(id);
+
+            if(data.status === 404){
+                return {status:data.status,message:'quadra inexistente não é possivel apaga-lá'};
+            }
+
+            const court = await Courts.update(
+                {name,location},
+                {where:{id}}
+            )
+
+            return {court,status:200,message:'quadra editada com sucesso'}
         } catch (error) {
             return {message:'erro ao listar quadras',status:500,error}
         }
