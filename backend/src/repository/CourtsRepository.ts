@@ -27,9 +27,29 @@ class CourtsRespository{
     async getOneById(id:string){
         try {
             const court = await Courts.findByPk(id);
+
+            if (!court) {
+                return {status:404,message:'quadra inexistente'}
+            }
+            
             return {status:200,court}
         } catch (error) {
             return {message:'erro ao listar a quadra',status:404,error}
+        }
+    }
+
+    async DeleteCourtById(id:string){
+        try {
+            const data = await this.getOneById(id);
+
+            if(data.status===404){
+                return {status:data.status,message:'quadra inexistente não é possivel apaga-lá'}
+            }
+            
+            await Courts.destroy({where:{id}})
+            return {status:200,message:'quadra apagada com sucesso'}
+        } catch (error) {
+            return {message:'erro ao listar quadras',status:500,error}
         }
     }
 }

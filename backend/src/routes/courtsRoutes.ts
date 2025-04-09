@@ -6,6 +6,7 @@ const courtsRouter = express.Router();
 courtsRouter.post('/',CourtsController.createCourt);
 courtsRouter.get('/',CourtsController.listAllCourts);
 courtsRouter.get('/:id',CourtsController.listOneById);
+courtsRouter.delete('/:id',CourtsController.eraseById);
 
 export default courtsRouter;
 

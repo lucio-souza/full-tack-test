@@ -39,6 +39,17 @@ class CourtsController{
         : res.status(data.status).json({ message: data.message, erro: data.error });
     }
 
+    async eraseById(req:Request,res:Response){
+        const {id}=req.params;
+
+        const data = await CourtsRepository.DeleteCourtById(id);
+        console.log(data.status);
+        
+
+        data.status === 200
+        ? res.status(data.status).json({message:data.message})
+        : res.status(data.status).json({ message: data.message, erro: data.error })
+    }
 }
 
 export default new CourtsController();
