@@ -16,12 +16,20 @@ class CourtsRespository{
     async getAll(availableFilter:boolean | undefined){
         try {
             const whereClause = availableFilter !== undefined ? {available: availableFilter } : {};
-            console.log(whereClause);
             
             const courts = await Courts.findAll({ where: whereClause });
             return { status: 200, courts };
         } catch (error) {
-            return {message:'erro ao listar quadras',status:400,error}
+            return {message:'erro ao listar quadras',status:404,error}
+        }
+    }
+
+    async getOneById(id:string){
+        try {
+            const court = await Courts.findByPk(id);
+            return {status:200,court}
+        } catch (error) {
+            return {message:'erro ao listar a quadra',status:404,error}
         }
     }
 }
