@@ -3,9 +3,9 @@ import { CourtsType } from "../types/courtsTypes";
 
 class CourtsRespository{
 
-    async create(name:CourtsType,location:CourtsType){
+    async create(court:CourtsType){
        try{ 
-        const newCourt=await Courts.create({name,location});
+        const newCourt=await Courts.create({name:court.name,location:court.location});
 
         return {newCourt,status:201}
        }catch(error){
@@ -53,7 +53,7 @@ class CourtsRespository{
         }
     }
 
-    async editCourt(id:string,name:CourtsType,location:CourtsType){
+    async editCourt(id:string,court:CourtsType){
         try {
             const data = await this.getOneById(id);
 
@@ -62,7 +62,7 @@ class CourtsRespository{
             }
 
             await Courts.update(
-                {name,location},
+                {name:court.name,location:court.location},
                 {where:{id}}
             );
             
