@@ -1,4 +1,4 @@
-import Courts from "../model/courts";
+import Courts from "../model/Courts";
 import { CourtsType } from "../types/courtsTypes";
 
 class CourtsRespository{
