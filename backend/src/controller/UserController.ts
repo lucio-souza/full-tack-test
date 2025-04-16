@@ -19,6 +19,18 @@ class UserController{
         ? res.status(data.status).json(data.users) 
         : res.status(data.status).json({message:data.message,erro:data.error});
     }
+
+    async login(req:Request,res:Response){
+        const {email,senha} = req.body;
+        console.log("chegou aqui");
+        
+
+        const data = await UserRepository.login({email,senha});
+
+        data.status===200 
+        ? res.status(201).json(data.token)
+        : res.status(404).json({message:data.message,erro:data.error})
+    }
 }
 
 export default new UserController();

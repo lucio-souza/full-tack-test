@@ -1,6 +1,10 @@
 import User from "../model/User";
-import { hash } from "bcrypt";
+import { hash,compare } from "bcrypt";
 import { userType } from "../types/userTypes";
+import { sign } from "jsonwebtoken";
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 class UserRepository{
 
@@ -26,6 +30,29 @@ class UserRepository{
         }
     }
 
+    async login(user:userType){
+        try {
+            const data = await User.findOne({where:{email:user.email}})
+
+            if(data){
+                const verifyPassword = await compare(user.senha,data.dataValues.senha)
+
+                if(!verifyPassword){
+                    return {message:'Senha incorreta',status:404,error:null};
+                }
+                
+                const token=sign(
+                    { id:data.dataValues.id },
+                    process.env.TOKEN_KEY as string,
+                    { expiresIn:"12hrs" }
+                )
+                return {token,status:200}
+            }
+            return { message: `Usuario inexistente`, status: 404};
+        } catch (error) {
+            return {status:500,message:'erro interno',error}
+        }
+    }
 
 }
 
