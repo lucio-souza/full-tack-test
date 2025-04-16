@@ -64,7 +64,6 @@ class CourtsController{
 
     async editPartialCourt(req:Request,res:Response){
         const {id}= req.params;
-        const {available} = req.body
 
         const data = await CourtsRepository.editPartialCourt(id);
 
