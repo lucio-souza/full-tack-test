@@ -19,4 +19,10 @@ const User = sequelize.define("users",{
     }
 })
 
+async function sincronizar() {
+    await User.sync();
+    console.log("Tabela sincronizada com sucesso");
+  }
+sincronizar();
+
 export default User;
