@@ -22,8 +22,6 @@ class UserController{
 
     async login(req:Request,res:Response){
         const {email,senha} = req.body;
-        console.log("chegou aqui");
-        
 
         const data = await UserRepository.login({email,senha});
 
