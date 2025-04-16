@@ -3,18 +3,19 @@ import { verify } from "jsonwebtoken";
 import dotenv from "dotenv"
 dotenv.config();
 
-export async function verifyToken(req:Request,res:Response,next:NextFunction){
-    const token=req.headers.authorization;
+export function verifyToken(req:Request,res:Response,next:NextFunction){
+    const authHeader = req.headers.authorization as string;
 
-    if (!token) {
-        return res.status(401).json({ message: "Token não fornecido" });
+    if (!authHeader) {
+        res.status(401).json({ message: "Token não fornecido" });
       }
+      const token = authHeader.replace("Bearer ", "");
       try {
+        console.log("deu cerrto");
+        
         verify(token, process.env.TOKEN_KEY as string);
         next();
       } catch (error) {
-          return res.status(401).json({message:error});
+          res.status(401).json({message:error});
       }
-    
-     
 }
