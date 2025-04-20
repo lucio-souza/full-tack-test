@@ -1,7 +1,7 @@
 // utils/validation.ts
 import { z } from 'zod';
 
-export const validateLogin = (email: string, senha: string) => {  
+export const validateForm = (email: string, senha: string) => {  
     const emailSchema = z.string()
     .nonempty("Email é obrigatório")
     .email('Formato de email inválido');
