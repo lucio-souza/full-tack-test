@@ -1,11 +1,17 @@
 <script lang="ts">
 export default{
-    name:'Input'
+    name:'Input',
+    props: {
+    modelValue: String, 
+  },
+  emits: ['update:modelValue']
 }
 </script>
 
 <template>
-    <input>
+    <input
+    :value="modelValue"
+    @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)">
 </template>
 
 <style scoped>
