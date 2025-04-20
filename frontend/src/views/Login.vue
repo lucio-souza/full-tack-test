@@ -1,54 +1,88 @@
 <script lang="ts">
+import { validateLogin } from '../utils/validation'; // Importando a função de validação
 import axios from 'axios';
 import Input from '../components/Input.vue';
 import Button from '../components/Button.vue';
+import Swal from 'sweetalert2';
+
 
 export default {
-    name:'Login',
-    components: {
+  name: 'Login',
+  components: {
     Input,
-    Button
+    Button,
   },
-    data() {
-        return{
-            email:'',
-            senha:'',
-            mensagem:''
-        }   
-    },
-    methods:{
-        logar (){
-            //const dados={
-            //    email:this.email,
-            //    senha:this.senha
-            //}
-            axios.get('http://localhost:8080/user/')
-            .then(()=>{this.mensagem ='deu certo',console.log("deu certo");
-            })
-            .catch(error=>{console.log('deu errado',error);
-            })
+  data() {
+    return {
+      email: '',
+      senha: '',
+      emailError: '',
+      senhaError:'',
+      loginError:false
+    };
+  },
+  methods: {
+    async logar() {
+        this.loginError=false
+        const errors = validateLogin(this.email, this.senha);
+        
+        this.emailError = errors.emailError;
+        this.senhaError = errors.senhaError;
+        
+        if(!this.emailError && !this.senhaError){
+        const dados = {
+          email: this.email,
+          senha: this.senha,
+        };
+    
+        try {
+          const response = await axios.post('http://localhost:8080/user/login', dados);
+          console.log('Login realizado com sucesso', response.data);
+        } catch (error) {
+            Swal.fire({
+            toast: true,
+            icon: 'error',
+            position: 'top',
+            title: 'Login falhou',
+            text: 'Email ou senha incorretos!',
+            timer: 5000,
+            confirmButtonColor: '#e63946',
+            timerProgressBar:true,
+            customClass:{
+                 timerProgressBar: 'custom-progress-bar-error'
+            }
+        });
+
+            console.log('Erro na requisição:', error);
         }
     }
-}
+    },
+  },
+};
 </script>
 
 <template>
     <main class="view">
-    <section class="left">
+      <section class="left">
         <img src="../assets/logo.png" alt="" class="logo">
         <p class="text-login">Faça seu Login</p>
         <form @submit.prevent="logar" class="form">
-            <Input type="text" placeholder="Email" v-model="email" />
-            <Input type="text" placeholder="Senha" v-model="senha" />
-            <Button type="submit" msg="Enviar"/>
+          <Input type="text" placeholder="Email" v-model="email" />
+          <p class="erro" v-if="emailError">{{ emailError }}</p>
+          
+          <Input type="password" placeholder="Senha" v-model="senha" />
+          <p class="erro" v-if="senhaError">{{ senhaError }}</p>
+          
+          <Button type="submit" msg="Enviar"/>
+          
         </form>
-        <p>faça seu <a href="#" target="_blank" rel="noopener noreferrer">cadastro aqui</a> </p>
-    </section>
-    <section class="right">
+        <p>faça seu <a href="#" target="_blank" rel="noopener noreferrer">cadastro aqui</a></p>
+      </section>
+      <section class="right">
         <img src="../assets/view-tennis-racket-hitting-ball.png" alt="" id="img-view">
-    </section>
+      </section>
     </main>
-</template>
+  </template>
 
 <style scoped>
 .view{
@@ -56,10 +90,10 @@ export default {
     height: 100vh;
     width: 100vw;
 }
+
 a{
     text-decoration: none;
     color: #1a0dab;
-
 }
 .text-login{
     font-size: 40px;
@@ -82,8 +116,16 @@ a{
     margin-bottom: -50px;
 }
 #img-view {
-    
   width: 100%;
   height: 100%;
+}
+.erro {
+  color: red;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  height: 20px; 
+}
+.custom-progress-bar {
+  background: rgba(230, 57, 70, 0.4) !important;
 }
 </style>
