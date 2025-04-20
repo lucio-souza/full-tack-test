@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Login from "../views/Login.vue"
+import Login from "../views/Login.vue";
+import Cadastro from '../views/Cadastro.vue';
 
 const routes = [
     {
         path:"/",
         name:"login",
         component:Login
+    },
+    {
+      path:"/cadastro",
+      name:"cadastro",
+      component:Cadastro
     }
 ]
 

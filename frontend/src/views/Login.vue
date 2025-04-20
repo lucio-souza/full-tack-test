@@ -1,10 +1,9 @@
 <script lang="ts">
-import { validateLogin } from '../utils/validation'; // Importando a função de validação
+import { validateForm } from '../utils/validation'; // Importando a função de validação
 import axios from 'axios';
 import Input from '../components/Input.vue';
 import Button from '../components/Button.vue';
 import Swal from 'sweetalert2';
-
 
 export default {
   name: 'Login',
@@ -18,13 +17,30 @@ export default {
       senha: '',
       emailError: '',
       senhaError:'',
-      loginError:false
     };
   },
+  mounted() {
+    this.showAlert()
+  },
   methods: {
+    showAlert(){
+      if(this.$route.query.isAlert === 'true'){
+        Swal.fire({
+            toast:true,
+            icon:'success',
+            position:'top',
+            title: 'Cadastro realizado com sucesso',
+            timer: 5000,
+            confirmButtonColor: '#06d6a0',
+            timerProgressBar:true,
+            customClass:{
+                timerProgressBar: 'custom-progress-bar-sucess'
+            }
+          })
+      }
+    },
     async logar() {
-        this.loginError=false
-        const errors = validateLogin(this.email, this.senha);
+        const errors = validateForm(this.email, this.senha);
         
         this.emailError = errors.emailError;
         this.senhaError = errors.senhaError;
@@ -57,13 +73,15 @@ export default {
         }
     }
     },
-  },
-};
+    redirect(){
+        this.$router.push('/Cadastro')
+    }
+  }};
 </script>
 
 <template>
     <main class="view">
-      <section class="left">
+      <section >
         <img src="../assets/logo.png" alt="" class="logo">
         <p class="text-login">Faça seu Login</p>
         <form @submit.prevent="logar" class="form">
@@ -76,9 +94,9 @@ export default {
           <Button type="submit" msg="Enviar"/>
           
         </form>
-        <p>faça seu <a href="#" target="_blank" rel="noopener noreferrer">cadastro aqui</a></p>
+        <p>faça seu <a href="#" @click.prevent="redirect"  rel="noopener noreferrer">cadastro aqui</a></p>
       </section>
-      <section class="right">
+      <section >
         <img src="../assets/view-tennis-racket-hitting-ball.png" alt="" id="img-view">
       </section>
     </main>
@@ -124,8 +142,5 @@ a{
   margin-top: 5px;
   font-size: 0.9rem;
   height: 20px; 
-}
-.custom-progress-bar {
-  background: rgba(230, 57, 70, 0.4) !important;
 }
 </style>
