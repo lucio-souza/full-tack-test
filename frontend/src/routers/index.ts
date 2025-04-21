@@ -27,11 +27,19 @@ const router = createRouter({
   routes
 });
 
+const publicPages = ['login', 'cadastro'];
+
 router.beforeEach((to, from, next) => {
   console.log(from.name);
-  const isAuth = localStorage.getItem('token')
-  if (to.name !== 'login' && !isAuth) next({ name: 'login' })
-  else next()
-})
+  
+  const isAuth = localStorage.getItem('token');
+  const isPublic = publicPages.includes((to.name ?? '') as string);
+
+  if (!isPublic && !isAuth) {
+    next({ name: 'login' });
+  } else {
+    next();
+  }
+});
 
 export default router
