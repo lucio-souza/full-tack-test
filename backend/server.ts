@@ -8,19 +8,18 @@
   
   const corsOptions:CorsOptions = {
     origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization']
   };
 
   const app = express();
-  const PORT = process.env.PORT;
 
   app.use(express.json());
   app.use(cors(corsOptions))
   app.use("/courts",courtsRouter);
   app.use("/user",userRouter);
 
-  app.listen(PORT, () => {
-    console.log(`Servidor On 🔥🔥 na porta ${PORT}`);
+  app.listen('8080', () => {
+    console.log(`Servidor On 🔥🔥 na porta 8080`);
   }
   );
