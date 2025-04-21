@@ -3,6 +3,7 @@ import Input from './Input.vue';
 import Button from './Button.vue';
 import axios from 'axios';
 import type { PropType } from 'vue';
+import Swal from 'sweetalert2';
 
 type CourtType = {
   id: string;
@@ -38,15 +39,42 @@ export default {
     }
     const token=localStorage.getItem('token')
     console.log(token);
-    
-    await axios.put(`http://localhost:8080/courts/${id}`,
+    try {
+      await axios.put(`http://localhost:8080/courts/${id}`,
         data,
         {
         headers: {
             Authorization: `Bearer ${token}` 
         }
     });
+    Swal.fire({
+            toast:true,
+            icon:'success',
+            position:'top',
+            title: 'Quadra editada com sucesso',
+            timer: 5000,
+            confirmButtonColor: '#06d6a0',
+            timerProgressBar:true,
+            customClass:{
+                timerProgressBar: 'custom-progress-bar-sucess'
+            }
+          })
     this.$emit('close')
+    } catch (error) {
+      Swal.fire({
+            toast:true,
+            icon:'error',
+            position:'top',
+            title: 'Não foi possivel editar  a quadra',
+            timer: 5000,
+            confirmButtonColor: '#06d6a0',
+            timerProgressBar:true,
+            customClass:{
+                timerProgressBar: 'custom-progress-bar-error'
+            }
+          })
+    }
+
     }
   }
 };
