@@ -27,7 +27,7 @@ button{
 }
 button:hover{
     background-color: var(--cor);
-    color: aliceblue;
+    color: white;
     border: none;
     cursor: pointer;
 }</style>
