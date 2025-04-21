@@ -76,7 +76,7 @@ export default {
     }
     },
     redirect(){
-        this.$router.push('/Cadastro')
+        this.$router.push('/cadastro')
     }
   }};
 </script>
