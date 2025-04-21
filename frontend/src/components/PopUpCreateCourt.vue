@@ -65,7 +65,7 @@ export default {
             confirmButtonColor: '#06d6a0',
             timerProgressBar:true,
             customClass:{
-                timerProgressBar: 'custom-progress-bar-sucess'
+                timerProgressBar: 'custom-progress-bar-error'
             }
           })
     }
