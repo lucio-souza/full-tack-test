@@ -53,6 +53,8 @@ export default {
     
         try {
           const response = await axios.post('http://localhost:8080/user/login', dados);
+          localStorage.setItem('token',`${response.data}`)
+          this.$router.push('/home')
           console.log('Login realizado com sucesso', response.data);
         } catch (error) {
             Swal.fire({
@@ -91,7 +93,7 @@ export default {
           <Input type="password" placeholder="Senha" v-model="senha" />
           <p class="erro" v-if="senhaError">{{ senhaError }}</p>
           
-          <Button type="submit" msg="Enviar"/>
+          <Button type="submit" msg="Enviar" cor="#041E31" />
           
         </form>
         <p>faça seu <a href="#" @click.prevent="redirect"  rel="noopener noreferrer">cadastro aqui</a></p>

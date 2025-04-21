@@ -75,8 +75,8 @@ export default{
           <Input type="password" placeholder="Senha" v-model="senha" />
           <p class="erro" v-if="senhaError">{{ senhaError }}</p>
           <div class="btns">
-            <Button type="submit" msg="Enviar"/>
-            <Button @click="redirect" msg="Voltar"/>
+            <Button type="submit" msg="Enviar" cor="#041E31"/>
+            <Button @click="redirect" msg="Voltar" cor="#041E31"/>
         </div>
           
         </form>
@@ -127,8 +127,5 @@ a{
   margin-top: 5px;
   font-size: 0.9rem;
   height: 20px; 
-}
-.custom-progress-bar {
-  background: rgba(230, 57, 70, 0.4) !important;
 }
 </style>
