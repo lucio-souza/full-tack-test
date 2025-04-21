@@ -11,7 +11,7 @@ export default{
 <template>
     <input
     :value="modelValue"
-    @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)">
+    @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
 </template>
 
 <style scoped>
