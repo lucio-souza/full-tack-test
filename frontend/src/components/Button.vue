@@ -2,13 +2,16 @@
 export default{
     name:'Button',
     props:{
-        msg:''
+        msg:'',
+        cor:{
+            type:String
+        }
     }
 }
 </script>
 
 <template>
-    <button>{{ msg }}</button>
+    <button :style="{ '--cor': cor }">{{ msg }}</button>
 </template>
 
 <style scoped>
@@ -17,13 +20,13 @@ button{
     font-size: 1.3rem;
     height: 5vh;
     border-radius: 10px;
-    border: 1px solid #041E31;
+    border: 1px solid var(--cor);
     background-color: transparent;
-    color: #041E31;
+    color: var(--cor);
     margin: 10px;
 }
 button:hover{
-    background-color: #041E31;
+    background-color: var(--cor);
     color: aliceblue;
     border: none;
     cursor: pointer;
