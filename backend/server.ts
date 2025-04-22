@@ -13,13 +13,14 @@
   };
 
   const app = express();
+  const port='8080'
 
   app.use(express.json());
   app.use(cors(corsOptions))
   app.use("/courts",courtsRouter);
   app.use("/user",userRouter);
 
-  app.listen('8080', () => {
+  app.listen(port, () => {
     console.log(`Servidor On 🔥🔥 na porta 8080`);
   }
   );
